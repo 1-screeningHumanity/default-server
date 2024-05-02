@@ -1,6 +1,7 @@
 package ScreeningHumanity.defaultserver.adaptor.out.infrastructure.mysql.entity;
 
 import ScreeningHumanity.defaultserver.domain.Example;
+import ScreeningHumanity.defaultserver.global.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "example")
 //todo: base entity 처리
-public class ExampleEntity {
+public class ExampleEntity extends BaseEntity {
     //해당 코드는 Entity 자체에서 유효성 검증을 진행한다.
     //또한, DB에 column 명을 지정하고 nullable 속성 등을 지정한다.
 
