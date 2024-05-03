@@ -4,6 +4,8 @@ import ScreeningHumanity.defaultserver.adaptor.in.web.vo.RequestExampleVo;
 import ScreeningHumanity.defaultserver.application.port.in.usecase.ExampleUseCase;
 import ScreeningHumanity.defaultserver.application.port.in.usecase.ExampleUseCase.SaveExampleDto;
 import ScreeningHumanity.defaultserver.application.port.out.dto.ExampleDto;
+import ScreeningHumanity.defaultserver.global.common.exception.BaseErrorCode;
+import ScreeningHumanity.defaultserver.global.common.exception.CustomException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
@@ -43,7 +45,9 @@ public class ExampleController {
     ) {
         ExampleDto exampleDto = exampleUseCase.SaveExample(
                 SaveExampleDto.toDtoFrom(requestExampleVo));
-        return exampleDto;
+
+        throw new CustomException(BaseErrorCode.INTERNAL_SERVER_ERROR);
+//        return exampleDto;
     }
 
 
