@@ -50,6 +50,12 @@ dependencies {
 
 	//Test Implementation
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//Query Dsl
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 }
 
 dependencyManagement {
@@ -61,3 +67,19 @@ dependencyManagement {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//QueryDSL_____________________________________
+def generated = "src/generated"
+
+tasks.withType(JavaCompile) {
+	options.getGeneratedSourceOutputDirectory().set(file(generated))
+}
+
+sourceSets {
+	main.java.srcDirs += [ generated ]
+}
+
+clean {
+	delete file(generated)
+}
+//_____________________________________________
