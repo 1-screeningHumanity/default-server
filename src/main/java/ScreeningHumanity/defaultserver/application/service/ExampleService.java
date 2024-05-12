@@ -17,6 +17,11 @@ public class ExampleService implements ExampleUseCase {
 
     @Override
     public ExampleDto SaveExample(SaveExampleDto saveExampleDto) {
-        return saveExamplePort.SaveExample(Example.saveExample(saveExampleDto));
+        return saveExamplePort.SaveExample(Example.toDomainFrom(saveExampleDto));
+    }
+
+    @Override
+    public ExampleDto LoadExampleByEmail(String email) {
+        return loadExamplePort.LoadExampleByEmail(email);
     }
 }

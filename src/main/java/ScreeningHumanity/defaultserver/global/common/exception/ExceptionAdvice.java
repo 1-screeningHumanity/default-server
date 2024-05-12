@@ -1,10 +1,10 @@
 package ScreeningHumanity.defaultserver.global.common.exception;
 
+import ScreeningHumanity.defaultserver.global.common.response.BaseResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
@@ -12,10 +12,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(CustomException.class)
-    public ResponseEntity<ErrorDto> customException(CustomException e, WebRequest request){
-        log.info("Message = {}", e.getBaseErrorCode().getMessage());
-        log.info("HttpStatus = {}", e.getBaseErrorCode().getHttpStatus());
-        log.info("Status = {}", e.getBaseErrorCode().getStatus());
-        return null;
+    public ResponseEntity<?> customException(CustomException e){
+        BaseResponse<Object> response = new BaseResponse<>(e.getStatus());
+        return new ResponseEntity<>(response, response.httpStatus());
     }
 }

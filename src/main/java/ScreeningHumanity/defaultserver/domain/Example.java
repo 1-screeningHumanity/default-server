@@ -12,7 +12,7 @@ public class Example {
 
     //todo : Mapper 도입 검토 할 것.
     //
-    public static Example saveExample(SaveExampleDto saveExampleDto){
+    public static Example toDomainFrom(SaveExampleDto saveExampleDto){
         return Example.builder()
                 .email(saveExampleDto.getEmail())
                 .name(saveExampleDto.getName())

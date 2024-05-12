@@ -55,4 +55,12 @@ public class ExampleEntity extends BaseEntity {
                 .name(example.getName())
                 .build();
     }
+
+    public Example toDomainFrom(ExampleEntity exampleEntity){
+        return Example
+                .builder()
+                .name(exampleEntity.getName())
+                .email(exampleEntity.getEmail())
+                .build();
+    }
 }

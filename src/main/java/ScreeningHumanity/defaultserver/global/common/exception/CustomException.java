@@ -1,11 +1,14 @@
 package ScreeningHumanity.defaultserver.global.common.exception;
 
+import ScreeningHumanity.defaultserver.global.common.response.BaseResponseCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
 @Getter
 public class CustomException extends RuntimeException {
 
-    private final BaseErrorCode baseErrorCode;
+    private final BaseResponseCode status;
+
+    public CustomException(BaseResponseCode status) {
+        this.status = status;
+    }
 }
