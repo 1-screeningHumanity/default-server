@@ -33,7 +33,7 @@ public class ExampleAdaptor implements LoadExamplePort, SaveExamplePort {
     @Override
     public ExampleDto LoadExampleByEmail(String email) {
         ExampleEntity findExample = exampleJpaRepository.findByEmail(email)
-                .orElseThrow(() -> new CustomException(BaseResponseCode.INTERNAL_SERVER_ERROR));
+                .orElseThrow(() -> new CustomException(BaseResponseCode.TEST_ERROR));
         //현재 INTERNAL_SERVER_ERROR를 터트리지만, 알맞은 ERROR 발생 시키면 됨.
 
         //todo : Mapper 도입 검토

@@ -58,7 +58,7 @@ public class ExampleController {
             @RequestParam(name = "email") String email
     ) {
         ExampleDto loadExampleDto = exampleUseCase.LoadExampleByEmail(email);
-
+        //todo : 여기말고 전체 코드 ctrl+L로 convention 맞춰야됨. notion 참고.
         return new BaseResponse<>(loadExampleDto);
     }
 
