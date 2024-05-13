@@ -17,7 +17,6 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 public class ExceptionAdvice {
 
     /**
-     * @param Custom Exception
      * @return Exception Response 사용자 지정 (Custom Exception)을 응답합니다.
      */
     @ExceptionHandler(CustomException.class)
@@ -27,9 +26,9 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @param ConstraintViolationException
-     * @return Exception Response validation 관련 Error 사항을 응답합니다.
-     * 유효성 검증 실패. ex)@email 형식에 맞지 않음. 길이가 맞지 않음. 등등.
+     * @return Exception Response validation 관련 Error 사항을 응답합니다. 유효성 검증 실패.
+     * ex)@email 형식에 맞지 않음. 길이가
+     * 맞지 않음. 등등.
      */
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<?> validationException(ConstraintViolationException e) {
@@ -48,9 +47,7 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @param MissingPathVariableException
-     * @return 관련 Error 사항을 응답합니다.
-     * 잘못된 PathVariable 사용.
+     * @return 관련 Error 사항을 응답합니다. 잘못된 PathVariable 사용.
      */
     @ExceptionHandler(MissingPathVariableException.class)
     public ResponseEntity<?> pathVariableException(MissingPathVariableException e) {
@@ -65,9 +62,7 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @param MissingServletRequestParameterException
-     * @return 관련 Error 사항을 응답합니다.
-     * 잘못된 Request Parameter 사용.
+     * @return 관련 Error 사항을 응답합니다. 잘못된 Request Parameter 사용.
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     public ResponseEntity<?> requestParameterException(MissingServletRequestParameterException e) {
@@ -82,9 +77,7 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @param NoHandlerFoundException
-     * @return 관련 Error 사항을 응답합니다.
-     * 잘못된 Request Parameter 사용.
+     * @return 관련 Error 사항을 응답합니다. 잘못된 Request Parameter 사용.
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<?> noHandlerException(MissingServletRequestParameterException e) {
@@ -99,9 +92,8 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @param Exception
-     * @return 사전 처리 되지 못한 Exception 처리
-     * 사전에 custom exception 혹은, 공통 exception 처리 되지 못한 exception 처리.
+     * @return 사전 처리 되지 못한 Exception 처리 사전에 custom exception 혹은,
+     * 공통 exception 처리 되지 못한 exception 처리.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> commonException(Exception e) {

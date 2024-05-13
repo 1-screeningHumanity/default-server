@@ -1,19 +1,17 @@
 package ScreeningHumanity.defaultserver.adaptor.in.web.controller;
 
-import ScreeningHumanity.defaultserver.adaptor.in.web.vo.RequestExampleVo;
+import ScreeningHumanity.defaultserver.adaptor.in.web.vo.RequestVo;
 import ScreeningHumanity.defaultserver.application.port.in.usecase.ExampleUseCase;
 import ScreeningHumanity.defaultserver.application.port.in.usecase.ExampleUseCase.SaveExampleDto;
 import ScreeningHumanity.defaultserver.application.port.out.dto.ExampleDto;
-import ScreeningHumanity.defaultserver.domain.Example;
 import ScreeningHumanity.defaultserver.global.common.response.BaseResponse;
-import ScreeningHumanity.defaultserver.global.common.response.BaseResponseCode;
-import ScreeningHumanity.defaultserver.global.common.exception.CustomException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.core.env.Environment;
@@ -32,8 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExampleController {
 
     private final DiscoveryClient discoveryClient;
-    private final ExampleUseCase exampleUseCase;
     private final Environment env;
+
+    private final ExampleUseCase exampleUseCase;
+    private final ModelMapper modelMapper;
 
     @Operation(summary = "example api", description = "예제 API 호출")
     @GetMapping
@@ -44,10 +44,11 @@ public class ExampleController {
     @Operation(summary = "save example api", description = "저장 예제 API 호출")
     @PostMapping("/save")
     public BaseResponse<ExampleDto> saveExample(
-            @RequestBody RequestExampleVo requestExampleVo
+            @RequestBody RequestVo.SaveExample requestExampleVo
     ) {
         ExampleDto exampleDto = exampleUseCase.SaveExample(
-                SaveExampleDto.toDtoFrom(requestExampleVo));
+                modelMapper.map(requestExampleVo, SaveExampleDto.class)
+        );
 
         return new BaseResponse<>(exampleDto);
     }
@@ -58,15 +59,13 @@ public class ExampleController {
             @RequestParam(name = "email") String email
     ) {
         ExampleDto loadExampleDto = exampleUseCase.LoadExampleByEmail(email);
-        //todo : 여기말고 전체 코드 ctrl+L로 convention 맞춰야됨. notion 참고.
         return new BaseResponse<>(loadExampleDto);
     }
 
 
     /**
-     * Health Check 해당 서비스 상태 확인
-     * 유레카 서버로부터 등록된 모든 instance 를 가져온다.
-     * 이후, 등록된 서비스의 상태를 logging 처리 하고, return 한다.
+     * Health Check 해당 서비스 상태 확인 유레카 서버로부터 등록된 모든 instance 를 가져온다. 이후, 등록된 서비스의 상태를 logging 처리 하고,
+     * return 한다.
      */
     @Operation(summary = "health check", description = "해당 서비스의 상태를 확인합니다.")
     @GetMapping("/health_check")

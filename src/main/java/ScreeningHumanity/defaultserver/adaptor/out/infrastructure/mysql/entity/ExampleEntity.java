@@ -22,7 +22,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "example")
-//todo: base entity 처리
 public class ExampleEntity extends BaseEntity {
     //해당 코드는 Entity 자체에서 유효성 검증을 진행한다.
     //또한, DB에 column 명을 지정하고 nullable 속성 등을 지정한다.
@@ -44,7 +43,7 @@ public class ExampleEntity extends BaseEntity {
      * 현재 Domain 이름이 Example 이라 Param 값이 이상하지만, 실제 도메인 적용시 가독성 향상 예정.
      * ex) public static MemberEntity toMemberEntityFrom(Member member)
      *      Member 도메인을 MemberEntity로 변환 하겠다.
-     *  todo : Mapper 도입 검토 할 것.
+     *  Entity 로의 Mapping은 데이터 무결성을 위해서 Model Mapper 사용 지양함.
      * @param example (domain)
      * @return ExampleEntity
      */
@@ -53,14 +52,6 @@ public class ExampleEntity extends BaseEntity {
                 .builder()
                 .email(example.getEmail())
                 .name(example.getName())
-                .build();
-    }
-
-    public Example toDomainFrom(ExampleEntity exampleEntity){
-        return Example
-                .builder()
-                .name(exampleEntity.getName())
-                .email(exampleEntity.getEmail())
                 .build();
     }
 }

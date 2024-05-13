@@ -6,6 +6,7 @@ import ScreeningHumanity.defaultserver.application.port.out.outport.LoadExampleP
 import ScreeningHumanity.defaultserver.application.port.out.outport.SaveExamplePort;
 import ScreeningHumanity.defaultserver.domain.Example;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +16,14 @@ public class ExampleService implements ExampleUseCase {
 
     private final LoadExamplePort loadExamplePort;
     private final SaveExamplePort saveExamplePort;
+    private final ModelMapper modelMapper;
 
     @Override
     @Transactional
     public ExampleDto SaveExample(SaveExampleDto saveExampleDto) {
-        return saveExamplePort.SaveExample(Example.toDomainFrom(saveExampleDto));
+        return saveExamplePort.SaveExample(
+                modelMapper.map(saveExampleDto, Example.class)
+        );
     }
 
     @Override
