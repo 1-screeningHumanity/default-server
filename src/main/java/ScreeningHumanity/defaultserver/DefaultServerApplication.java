@@ -18,7 +18,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 //        }
 //)
 public class DefaultServerApplication {
-    //todo : 유레카 서버 등록되는거 확인 필요. + healthCheck 확인;
 
     public static void main(String[] args) {
         SpringApplication.run(DefaultServerApplication.class, args);
