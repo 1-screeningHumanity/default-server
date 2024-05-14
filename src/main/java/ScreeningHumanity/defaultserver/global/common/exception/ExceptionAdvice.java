@@ -6,10 +6,12 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
@@ -26,8 +28,7 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @return Exception Response validation 관련 Error 사항을 응답합니다. 유효성 검증 실패.
-     * ex)@email 형식에 맞지 않음. 길이가
+     * @return Exception Response validation 관련 Error 사항을 응답합니다. 유효성 검증 실패. ex)@email 형식에 맞지 않음. 길이가
      * 맞지 않음. 등등.
      */
     @ExceptionHandler(ConstraintViolationException.class)
@@ -41,6 +42,41 @@ public class ExceptionAdvice {
                 BaseResponseCode.VALIDATION_FAIL_ERROR.isSuccess(),
                 message,
                 BaseResponseCode.VALIDATION_FAIL_ERROR.getCode(),
+                null);
+
+        return new ResponseEntity<>(response, response.httpStatus());
+    }
+
+    /**
+     * @return Exception Response validation 관련 Error 사항을 응답합니다. 유효성 검증 실패. ex)@email 형식에 맞지 않음. 길이가
+     * 맞지 않음. 등등.
+     */
+    @ExceptionHandler(HandlerMethodValidationException.class)
+    public ResponseEntity<?> handlerValidationException(HandlerMethodValidationException e) {
+
+        BaseResponse<?> response = new BaseResponse<>(
+                BaseResponseCode.VALIDATION_FAIL_ERROR.getHttpStatus(),
+                BaseResponseCode.VALIDATION_FAIL_ERROR.isSuccess(),
+                e.getMessage(),
+                BaseResponseCode.VALIDATION_FAIL_ERROR.getCode(),
+                null);
+
+        return new ResponseEntity<>(response, response.httpStatus());
+    }
+
+
+    /**
+     * @return Client 잘못된 Method 입력
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<?> httpRequestMethodNotSupportedException(
+            HttpRequestMethodNotSupportedException e) {
+
+        BaseResponse<?> response = new BaseResponse<>(
+                BaseResponseCode.METHOD_NOT_ALLOW_ERROR.getHttpStatus(),
+                BaseResponseCode.METHOD_NOT_ALLOW_ERROR.isSuccess(),
+                e.getBody().getDetail(),
+                BaseResponseCode.METHOD_NOT_ALLOW_ERROR.getCode(),
                 null);
 
         return new ResponseEntity<>(response, response.httpStatus());
@@ -92,8 +128,7 @@ public class ExceptionAdvice {
     }
 
     /**
-     * @return 사전 처리 되지 못한 Exception 처리 사전에 custom exception 혹은,
-     * 공통 exception 처리 되지 못한 exception 처리.
+     * @return 사전 처리 되지 못한 Exception 처리 사전에 custom exception 혹은, 공통 exception 처리 되지 못한 exception 처리.
      */
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> commonException(Exception e) {

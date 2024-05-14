@@ -7,6 +7,7 @@ import ScreeningHumanity.defaultserver.application.port.out.dto.ExampleDto;
 import ScreeningHumanity.defaultserver.global.common.response.BaseResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -48,7 +49,7 @@ public class ExampleController {
     @Operation(summary = "Load example api", description = "읽기 예제 API 호출")
     @GetMapping("/read")
     public BaseResponse<ExampleDto> saveExample(
-            @RequestParam(name = "email") String email
+            @RequestParam(name = "email") @Email String email
     ) {
         ExampleDto loadExampleDto = exampleUseCase.LoadExampleByEmail(email);
         return new BaseResponse<>(loadExampleDto);
