@@ -75,7 +75,7 @@ tasks.named('test') {
 }
 
 //QueryDSL_____________________________________
-def generated = "src/generated"
+def generated = "src/main/generated"
 
 tasks.withType(JavaCompile) {
 	options.getGeneratedSourceOutputDirectory().set(file(generated))
