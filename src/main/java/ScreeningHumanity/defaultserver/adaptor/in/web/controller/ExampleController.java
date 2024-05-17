@@ -43,7 +43,7 @@ public class ExampleController {
                 modelMapper.map(requestExampleVo, SaveExampleDto.class)
         );
 
-        return new BaseResponse<>(exampleDto);
+        return new BaseResponse<>();
     }
 
     @Operation(summary = "Load example api", description = "읽기 예제 API 호출")

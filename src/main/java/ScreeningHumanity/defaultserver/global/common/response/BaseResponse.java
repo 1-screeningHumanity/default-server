@@ -9,9 +9,9 @@ public record BaseResponse<T>(
         @JsonProperty("isSuccess") Boolean isSuccess,
         @JsonProperty("message") String message,
         @JsonProperty("code") int code,
-        @JsonInclude(JsonInclude.Include.NON_NULL)
         @JsonProperty("data") T result
 ) {
+
 
     // 요청에 성공한 경우 -> return 객체가 필요한 경우
     public BaseResponse(T result) {
