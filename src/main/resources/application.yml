@@ -3,7 +3,7 @@ spring:
     name: default-server
   datasource:
     url: ${DEFAULT_DB}
-    username: ${DEFAULT_DB_SER}
+    username: ${DEFAULT_DB_USER}
     password: ${DEFAULT_DB_PW}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
