@@ -3,12 +3,12 @@ spring:
     name: default-server
   datasource:
     url: ${DEFAULT_DB}
-    username: ${DEFAULT_DB_SER}
+    username: ${DEFAULT_DB_USER}
     password: ${DEFAULT_DB_PW}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
@@ -19,12 +19,12 @@ server:
 eureka:
   instance:
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-    hostname: localhost
+    hostname: default-server
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: ${EUREKA_URl}
+      defaultZone: ${EUREKA_URI}
 
 logging:
   level:
