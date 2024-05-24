@@ -5,7 +5,6 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
-import io.swagger.v3.oas.models.security.SecurityScheme.Type;
 import io.swagger.v3.oas.models.servers.Server;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ public class SwaggerConfig {
     private static final String BEARER_TOKEN = "Bearer ";
     private static final String BEARER_SCHEME = "bearer";
     private static final String BEARER_FORMAT = "JWT";
-
     private int serverPort;
 
     @EventListener
@@ -37,7 +35,7 @@ public class SwaggerConfig {
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes(BEARER_TOKEN, new SecurityScheme()
                                 .name(BEARER_TOKEN)
-                                .type(Type.HTTP)
+                                .type(SecurityScheme.Type.HTTP)
                                 .scheme(BEARER_SCHEME)
                                 .bearerFormat(BEARER_FORMAT)))
                 .info(apiInfo());
@@ -62,8 +60,9 @@ public class SwaggerConfig {
         localServer.setDescription("Local Test Server URL");
 
         Server dynamicServer = new Server();
-        dynamicServer.setUrl("https://{domain}");
-        dynamicServer.setDescription("Server URL");
+        //todo : service 명에 맞게 path 수정 필요.
+        dynamicServer.setUrl("https://screeninghumanity.shop/api/v1/default");
+        dynamicServer.setDescription("");
 
         servers.add(localServer);
         servers.add(dynamicServer);
